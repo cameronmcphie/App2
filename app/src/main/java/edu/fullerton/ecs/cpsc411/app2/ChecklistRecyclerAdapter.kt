@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 
-class ChecklistRecyclerAdapter(content: ArrayList<Checklist>): RecyclerView.Adapter<ViewHolder>() {
+class ChecklistRecyclerAdapter(content: List<Checklist>): RecyclerView.Adapter<ViewHolder>() {
 
     private var checklist: List<Checklist> = content
 
@@ -26,6 +26,5 @@ class ChecklistRecyclerAdapter(content: ArrayList<Checklist>): RecyclerView.Adap
 
     fun addContent(contentList: List<Checklist>) {
         this.checklist = contentList
-        notifyDataSetChanged()
     }
 }

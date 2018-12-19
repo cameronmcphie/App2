@@ -13,5 +13,6 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/itemText" android:layout_weight="1" android:importantForAutofill="no"
-            tools:targetApi="o" android:hint="Enter Item"/>
+            tools:targetApi="o" android:hint="@string/enter_item_hint"
+            />
 </LinearLayout>

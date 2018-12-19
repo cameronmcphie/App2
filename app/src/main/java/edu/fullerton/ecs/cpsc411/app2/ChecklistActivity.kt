@@ -20,30 +20,42 @@ class ChecklistActivity: AppCompatActivity() {
 
     var recyclerAdapter: ChecklistRecyclerAdapter? = null
     var contentRecyclerView: RecyclerView? = null
+//
+//    var db: ChecklistDatabase? = null
+//
+//    var viewModel: ContentViewModel? = null
 
-    var db: ChecklistDatabase? = null
-
-    var viewModel: ContentViewModel? = null
+    private val viewModel by lazy {
+        ViewModelProviders.of(this).get(ContentViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_check_list)
         setSupportActionBar(toolbar)
 
-        db = ChecklistDatabase.getDatabase(this)
+//        db = ChecklistDatabase.getDatabase(this)
+//        val checklistDAO = db!!.checklistDAO()
+//        val tmp2 = checklistDAO.getCheckList()
+//
+//
+//
+//        contentRecyclerView = findViewById(R.id.checklistRecyclerView)
+//        recyclerAdapter = ChecklistRecyclerAdapter(arrayListOf())
+//
+//        contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
+//        contentRecyclerView!!.adapter = recyclerAdapter
 
-        contentRecyclerView = findViewById(R.id.checklistRecyclerView)
-        recyclerAdapter = ChecklistRecyclerAdapter(arrayListOf())
 
-        contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
-        contentRecyclerView!!.adapter = recyclerAdapter
+//        var tmp : List<Checklist> = viewModel!!.getListContent()
+
+//        viewModel = ViewModelProviders.of(this).get(ContentViewModel::class.java)
 
 
-        viewModel = ViewModelProviders.of(this).get(ContentViewModel::class.java)
 
-        viewModel!!.getListContent().observe(this, Observer {
-            items -> recyclerAdapter!!.addContent(items!!)
-        })
+//        viewModel!!.getListContent().observe(this, Observer {
+//            items -> recyclerAdapter!!.addContent(items!!)
+//        })
 
         //setContentView(R.layout.list_item)
 
@@ -51,25 +63,32 @@ class ChecklistActivity: AppCompatActivity() {
 
 
 //        val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
-
-//        delete(db)
-//
-//        insertChecklist(db)
-//        insertChecklist(db)
-//        insertChecklist(db)
-//        insertChecklist(db)
-//
-//          printAllChecklists(db)
-//
-//        removeItem(db, 2)
-//
-//        printAllChecklists(db)
+//        val checklistDAO = db.checklistDAO()
+//        var content = checklistDAO.getCheckList()
 
 
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
+
+        //recyclerAdapter = ChecklistRecyclerAdapter(content)
+
+        recyclerAdapter = ChecklistRecyclerAdapter(viewModel.getListContent())
+        contentRecyclerView = findViewById(R.id.checklistRecyclerView)
+
+        contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
+        contentRecyclerView!!.adapter = recyclerAdapter
+
+
+
+
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+
+            recyclerAdapter = ChecklistRecyclerAdapter(viewModel.addEmptyListItem())
+            contentRecyclerView = findViewById(R.id.checklistRecyclerView)
+
+            contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
+            contentRecyclerView!!.adapter = recyclerAdapter
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -97,19 +116,19 @@ class ChecklistActivity: AppCompatActivity() {
         checklistDAO.insertItem(tmp)
     }
 
-//    private fun printAllChecklists(db: ChecklistDatabase) {
-//        val checklistDAO = db.checklistDAO()
-//        val tmp2 = checklistDAO.getCheckList()
-//
-//        for (item in tmp2) {
-//
-//            val tmp3: String = if (!item.isCompleted) "false" else {
-//                "true"
-//            }
-//
-//            println(item.checklistId.toString() + " " + item.checklistContent + " " + tmp3)
-//        }
-//    }
+    private fun printAllChecklists(db: ChecklistDatabase) {
+        val checklistDAO = db.checklistDAO()
+        val tmp2 = checklistDAO.getCheckList()
+
+        for (item in tmp2) {
+
+            val tmp3: String = if (!item.isCompleted) "false" else {
+                "true"
+            }
+
+            println(item.checklistId.toString() + " " + item.checklistContent + " " + tmp3)
+        }
+    }
 
     private fun delete(db: ChecklistDatabase) {
         val checklistDAO = db.checklistDAO()
