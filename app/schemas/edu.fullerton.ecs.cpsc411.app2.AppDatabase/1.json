@@ -1,0 +1,45 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6e3d6c2a1e5a6fe714c70123caa53c51",
+    "entities": [
+      {
+        "tableName": "ChecklistTbl",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`checklist_id` INTEGER PRIMARY KEY AUTOINCREMENT, `checklist_content` TEXT, `is_completed` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "checklistId",
+            "columnName": "checklist_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "checklistContent",
+            "columnName": "checklist_content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isCompleted",
+            "columnName": "is_completed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "checklist_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6e3d6c2a1e5a6fe714c70123caa53c51\")"
+    ]
+  }
+}
