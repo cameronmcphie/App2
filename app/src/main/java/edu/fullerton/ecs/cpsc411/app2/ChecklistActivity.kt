@@ -15,6 +15,7 @@ import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_check_list.*
 import kotlinx.android.synthetic.main.content_check_list.*
+import kotlinx.android.synthetic.main.list_item.*
 
 class ChecklistActivity: AppCompatActivity() {
 
@@ -31,7 +32,8 @@ class ChecklistActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.content_check_list)
+//        setContentView(R.layout.content_check_list)
+        setContentView(R.layout.activity_check_list)
         setSupportActionBar(toolbar)
 
 //        db = ChecklistDatabase.getDatabase(this)
@@ -64,11 +66,15 @@ class ChecklistActivity: AppCompatActivity() {
 
 //        val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
 //        val checklistDAO = db.checklistDAO()
-//        var content = checklistDAO.getCheckList()
+        //var content = checklistDAO.getCheckList()
+//        insertChecklist(db, "test1")
+//        insertChecklist(db, "test2")
+//        insertChecklist(db, "test3")
+//        insertChecklist(db, "test4")
 
 
 
-        //recyclerAdapter = ChecklistRecyclerAdapter(content)
+        //val currentChecklist = (viewModel.getListContent())
 
         recyclerAdapter = ChecklistRecyclerAdapter(viewModel.getListContent())
         contentRecyclerView = findViewById(R.id.checklistRecyclerView)
@@ -78,11 +84,12 @@ class ChecklistActivity: AppCompatActivity() {
 
 
 
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-
+        fab.setOnClickListener {
+            val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
+            val tmp = Checklist()
+            val checklistDAO = db.checklistDAO()
+            checklistDAO.insertItem(tmp)
+            val lastInserted = checklistDAO.getLastInserted()
             recyclerAdapter = ChecklistRecyclerAdapter(viewModel.addEmptyListItem())
             contentRecyclerView = findViewById(R.id.checklistRecyclerView)
 
@@ -91,25 +98,25 @@ class ChecklistActivity: AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_check_list, menu)
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        menuInflater.inflate(R.menu.menu_check_list, menu)
+//        return true
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        return when (item.itemId) {
+//            R.id.action_settings -> true
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
-    private fun insertChecklist(db: ChecklistDatabase) {
+    private fun insertChecklist(db: ChecklistDatabase, content: String) {
 
-        val tmp = Checklist(checklistContent = "test")
+        val tmp = Checklist(checklistContent = content)
 
         val checklistDAO = db.checklistDAO()
 

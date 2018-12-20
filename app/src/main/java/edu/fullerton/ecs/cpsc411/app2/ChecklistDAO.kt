@@ -1,8 +1,6 @@
 package edu.fullerton.ecs.cpsc411.app2
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 
 @Dao
 interface ChecklistDAO {
@@ -12,8 +10,14 @@ interface ChecklistDAO {
     @Insert
     fun insertItem(checklist: Checklist)
 
+    @Query("UPDATE ChecklistTbl SET checklist_content = :checklistContent WHERE checklist_id = :id")
+    fun updateContent(checklistContent: String, id: Int)
+
     @Query("DELETE FROM ChecklistTbl WHERE checklist_id = :id")
     fun deleteItem(id : Int)
+
+    @Query("SELECT LAST_INSERT_ROWID()")
+    fun getLastInserted() : Int
 
     @Query("DELETE FROM ChecklistTbl")
     fun deleteChecklist()

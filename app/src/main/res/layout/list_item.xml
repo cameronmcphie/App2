@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp">
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="8dp" android:id="@+id/itemLayout">
 
     <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/itemCheckbox" android:layout_weight="0"/>
+    <TextView
+            android:text="@string/_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/listIdHolder" android:layout_weight="0"
+            />
+    <!--android:visibility="gone"-->
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,5 +20,5 @@
             android:ems="10"
             android:id="@+id/itemText" android:layout_weight="1" android:importantForAutofill="no"
             tools:targetApi="o" android:hint="@string/enter_item_hint"
-            />
+    />
 </LinearLayout>

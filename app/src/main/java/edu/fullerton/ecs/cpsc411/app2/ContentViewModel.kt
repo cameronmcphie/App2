@@ -22,8 +22,7 @@ class ContentViewModel(application: Application): AndroidViewModel(application) 
         return listContent
     }
 
-    fun addContent(content: Checklist) {
-        appDatabase.checklistDAO().insertItem(content)
-    }
-
+//    fun addContent(content: Checklist) {
+//        appDatabase.checklistDAO().insertItem(content)
+//    }
 }
