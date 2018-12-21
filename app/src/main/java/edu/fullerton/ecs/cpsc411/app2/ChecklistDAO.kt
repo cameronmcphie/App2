@@ -16,8 +16,8 @@ interface ChecklistDAO {
     @Query("DELETE FROM ChecklistTbl WHERE checklist_id = :id")
     fun deleteItem(id : Int)
 
-    @Query("SELECT LAST_INSERT_ROWID()")
-    fun getLastInserted() : Int
+//    @Query("SELECT LAST_INSERT_ROWID()")
+//    fun getLastInserted() : Int
 
     @Query("DELETE FROM ChecklistTbl")
     fun deleteChecklist()

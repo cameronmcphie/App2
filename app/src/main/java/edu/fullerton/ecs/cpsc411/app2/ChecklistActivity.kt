@@ -26,9 +26,11 @@ class ChecklistActivity: AppCompatActivity() {
 //
 //    var viewModel: ContentViewModel? = null
 
+
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(ContentViewModel::class.java)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,19 +66,23 @@ class ChecklistActivity: AppCompatActivity() {
 
 
 
-//        val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
+        val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
 //        val checklistDAO = db.checklistDAO()
         //var content = checklistDAO.getCheckList()
-//        insertChecklist(db, "test1")
-//        insertChecklist(db, "test2")
-//        insertChecklist(db, "test3")
-//        insertChecklist(db, "test4")
 
 
+        val checklist = viewModel.getListContent()
+        var checklistCount = checklist.size
+        if (checklistCount != 5) {
+            insertChecklist(db, "")
+            insertChecklist(db, "")
+            insertChecklist(db, "")
+            insertChecklist(db, "")
+            insertChecklist(db, "")
+        }
 
-        //val currentChecklist = (viewModel.getListContent())
 
-        recyclerAdapter = ChecklistRecyclerAdapter(viewModel.getListContent())
+        recyclerAdapter = ChecklistRecyclerAdapter(checklist)
         contentRecyclerView = findViewById(R.id.checklistRecyclerView)
 
         contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
@@ -84,18 +90,18 @@ class ChecklistActivity: AppCompatActivity() {
 
 
 
-        fab.setOnClickListener {
-            val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
-            val tmp = Checklist()
-            val checklistDAO = db.checklistDAO()
-            checklistDAO.insertItem(tmp)
-            val lastInserted = checklistDAO.getLastInserted()
-            recyclerAdapter = ChecklistRecyclerAdapter(viewModel.addEmptyListItem())
-            contentRecyclerView = findViewById(R.id.checklistRecyclerView)
-
-            contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
-            contentRecyclerView!!.adapter = recyclerAdapter
-        }
+//        fab.setOnClickListener {
+//            val db = Room.databaseBuilder(applicationContext, ChecklistDatabase::class.java, "ChecklistsDB").allowMainThreadQueries().build()
+//            val tmp = Checklist()
+//            val checklistDAO = db.checklistDAO()
+//            checklistDAO.insertItem(tmp)
+//            val lastInserted = checklistDAO.getLastInserted()
+//            recyclerAdapter = ChecklistRecyclerAdapter(viewModel.addEmptyListItem())
+//            contentRecyclerView = findViewById(R.id.checklistRecyclerView)
+//
+//            contentRecyclerView!!.layoutManager = LinearLayoutManager(this)
+//            contentRecyclerView!!.adapter = recyclerAdapter
+//        }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -122,28 +128,28 @@ class ChecklistActivity: AppCompatActivity() {
 
         checklistDAO.insertItem(tmp)
     }
-
-    private fun printAllChecklists(db: ChecklistDatabase) {
-        val checklistDAO = db.checklistDAO()
-        val tmp2 = checklistDAO.getCheckList()
-
-        for (item in tmp2) {
-
-            val tmp3: String = if (!item.isCompleted) "false" else {
-                "true"
-            }
-
-            println(item.checklistId.toString() + " " + item.checklistContent + " " + tmp3)
-        }
-    }
-
-    private fun delete(db: ChecklistDatabase) {
-        val checklistDAO = db.checklistDAO()
-        checklistDAO.deleteChecklist()
-    }
-
-    private fun removeItem(db: ChecklistDatabase, id: Int) {
-        val checklistDAO = db.checklistDAO()
-        checklistDAO.deleteItem(id)
-    }
+//
+//    private fun printAllChecklists(db: ChecklistDatabase) {
+//        val checklistDAO = db.checklistDAO()
+//        val tmp2 = checklistDAO.getCheckList()
+//
+//        for (item in tmp2) {
+//
+//            val tmp3: String = if (!item.isCompleted) "false" else {
+//                "true"
+//            }
+//
+//            println(item.checklistId.toString() + " " + item.checklistContent + " " + tmp3)
+//        }
+//    }
+//
+//    private fun delete(db: ChecklistDatabase) {
+//        val checklistDAO = db.checklistDAO()
+//        checklistDAO.deleteChecklist()
+//    }
+//
+//    private fun removeItem(db: ChecklistDatabase, id: Int) {
+//        val checklistDAO = db.checklistDAO()
+//        checklistDAO.deleteItem(id)
+//    }
 }

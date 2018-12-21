@@ -18,7 +18,7 @@ class ViewHolder(item: View): RecyclerView.ViewHolder(item) {
         listItemText.onChange(item)
     }
 
-    fun EditText.onChange(item: View) {
+    private fun EditText.onChange(item: View) {
         this.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

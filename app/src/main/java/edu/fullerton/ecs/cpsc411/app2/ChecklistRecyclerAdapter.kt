@@ -17,13 +17,13 @@ class ChecklistRecyclerAdapter(content: List<Checklist>): RecyclerView.Adapter<V
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.listItemText.setText(checklist[position].checklistContent)
         holder.itemId.text = checklist[position].checklistId.toString()
-        holder.taskCheckBox.setOnClickListener {
-            val appDatabase = ChecklistDatabase.getDatabase(it.context)
-            val id = holder.itemId.text.toString()
-            appDatabase.checklistDAO().deleteItem(id.toInt())
-            it.visibility = View.GONE
-            holder.listItemText.visibility = View.GONE
-        }
+//        holder.taskCheckBox.setOnClickListener {
+//            val appDatabase = ChecklistDatabase.getDatabase(it.context)
+//            val id = holder.itemId.text.toString()
+//            appDatabase.checklistDAO().deleteItem(id.toInt())
+//            it.visibility = View.GONE
+//            holder.listItemText.visibility = View.GONE
+//        }
 
     }
 
